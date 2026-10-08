@@ -1,0 +1,12 @@
+{
+  "name": "vivies-design-preview",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VIVIES interactive design prototype; not a WordPress installation",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check preview.js && node --check server.js",
+    "test": "python tests/preview_test.py",
+    "package": "python tools/package_preview.py"
+  }
+}

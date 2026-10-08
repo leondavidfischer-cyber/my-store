@@ -1,0 +1,34 @@
+VIVIES — FIRST DESIGN PREVIEW
+
+1. Extract vivies-preview.zip completely.
+2. Open the extracted vivies-preview folder.
+3. Double-click index.html to open it in Chrome, Edge, Firefox or Safari.
+
+Keep styles.css and preview.js next to index.html. Internet access is not required.
+Do not upload this ZIP as a WordPress theme or Elementor template.
+
+TRY THE PREVIEW
+- Scroll down and return to the top to see the header background transition.
+- Open Menu, choose Men or Women, then explore each category level.
+- Use Back, Close, Escape, or click the desktop overlay.
+- Open Contact us to see the right panel and placeholder informational pages.
+- Search for "men sunglasses", "women sunglasses", or "skirts".
+- Click the category cards and Shop Now.
+- Open Preview notes in the footer for simple/variable product layout examples.
+- Resize the browser or use its mobile device tools.
+
+WHAT IS TEMPORARY
+The text logo, all image areas, category-card selections, featured captions,
+contact email, informational pages and product content await approval/assets.
+No Louis Vuitton branding or campaign imagery is included.
+
+WHAT THIS DOES NOT TEST
+This is a browser design prototype, not the WordPress implementation.
+Search demonstrates category navigation only. No catalog is connected.
+Purchasing is disabled. Cart, totals, checkout, payments and orders are not
+simulated. Elementor editing will be verified after design approval.
+
+NEXT STEP
+Review the layout and interactions, then provide design feedback and a usable
+original Vivies logo. The deployable WordPress implementation comes only after
+your approval. No live-site changes have been made.

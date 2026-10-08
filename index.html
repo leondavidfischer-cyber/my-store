@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="VIVIES interactive design preview. Placeholder imagery; commerce is not connected.">
+  <title>Vivies — Design preview</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="preview.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site">
+    <header class="header" id="header">
+      <div class="header-left">
+        <button class="header-action" data-panel="menu" aria-label="Menu" aria-controls="panel" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg><span>Menu</span></button>
+        <button class="header-action search-action" data-panel="search" aria-label="Search" aria-controls="panel" aria-expanded="false"><span>Search</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+      </div>
+      <a class="wordmark" href="#/" aria-label="Vivies home — temporary text logo">Vivies</a>
+      <div class="header-right">
+        <button class="header-action" data-panel="contact" aria-label="Contact us" aria-controls="panel" aria-expanded="false"><span>Contact us</span><svg class="mobile-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 6 9 7 9-7"/></svg></button>
+        <a class="header-action bag-action" href="#/cart" aria-label="Shopping bag — commerce not connected"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg></a>
+      </div>
+    </header>
+    <main id="main" tabindex="-1"></main>
+    <footer class="footer">
+      <div><h2>Help</h2><a href="#/page/contact">Contact us</a><a href="#/page/faq">FAQ</a><a href="#/page/shipping">Shipping &amp; Returns</a></div>
+      <div><h2>Information</h2><a href="#/page/privacy">Privacy Policy</a><a href="#/page/terms">Terms &amp; Conditions</a></div>
+      <div class="footer-preview"><p>Design preview</p><p>Temporary text logo and media placeholders.<br>WooCommerce is not connected.</p><button class="text-link" data-panel="notes">Preview notes</button></div>
+      <a class="footer-logo" href="#/">Vivies</a>
+    </footer>
+  </div>
+  <div id="overlay" class="overlay" aria-hidden="true"></div>
+  <section id="panel" class="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" hidden>
+    <div class="panel-toolbar"><button id="back" class="back" aria-label="Back to previous menu level" hidden><span aria-hidden="true">←</span> Back</button><button id="close" class="close" aria-label="Close panel"><span aria-hidden="true">×</span><span>Close</span></button></div>
+    <div id="panel-content"></div>
+  </section>
+  <noscript><p class="noscript">Please enable JavaScript to use this interactive design preview.</p></noscript>
+</body>
+</html>
