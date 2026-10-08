@@ -60,6 +60,14 @@ launch remains unverified here. It does not test WordPress or WooCommerce integr
 
 ## Temporary decisions and scope
 
+- The latest supplied homepage screenshot guides the header/hero proportions:
+  a 90px desktop header, compact controls, a smaller centered original logo,
+  an almost full-viewport hero and a bottom-centered campaign caption. Browser
+  toolbars are excluded from these measurements. The hero uses neutral media
+  until original campaign artwork is provided; caption text is temporary.
+  The earlier decorative placeholder shapes have been removed. The campaign
+  action opens the existing category selector rather than inventing a destination.
+
 - The original transparent `Vivies.png` is used unchanged in the header and footer.
   Its transparent outer margins are clipped by a CSS display frame based on the
   visible artwork bounds (50, 377)–(939, 615) within the 1000×1000 source. The image
