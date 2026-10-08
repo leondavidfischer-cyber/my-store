@@ -3,6 +3,15 @@
 This repository contains the interactive prototype requested for design approval.
 It is not a WordPress theme, Elementor import or functioning e-commerce store.
 
+## Try it inside WordPress
+
+The user has authorized a WordPress design trial. Download
+[vivies-preview.zip](wordpress/vivies-preview.zip) and follow
+[the installation steps](wordpress/TRY-IN-WORDPRESS.md). This plugin opens an
+administrator-only preview from Tools → Vivies Preview. It does not switch the
+public theme or connect commerce. The final Elementor/WooCommerce build remains
+a separate stage.
+
 ## Publish the design preview with GitHub Pages
 
 In `leondavidfischer-cyber/my-store` on GitHub, open **Settings → Pages**. Under

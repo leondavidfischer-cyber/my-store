@@ -7,8 +7,11 @@ child theme for shared markup, the fixed header/footer, responsive styling and
 WooCommerce support. A small VIVIES companion plugin owns reusable functionality
 and settings. Do not modify core or dependency files.
 
-The current standalone preview establishes layout and interaction behavior only.
-It is neither an importable Elementor template nor deployable WordPress code.
+The standalone preview establishes layout and interaction behavior only.
+An optional [administrator-only WordPress trial](../wordpress/TRY-IN-WORDPRESS.md)
+now embeds that same design in an isolated plugin page without replacing the
+public theme. This trial is not an importable Elementor template or a production
+WooCommerce integration.
 See [reference review and implementation mapping](reference-review.md) for the
 latest preview refinement and the remaining live-reference access limitation.
 
