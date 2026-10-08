@@ -43,6 +43,11 @@
   let menuTrail = [];
   let opener = null;
   let closeTimer;
+  let panelRevision = 0;
+  let menuRevision = 0;
+  let menuAnimation = null;
+  let menuChanging = false;
+  const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const categoryLink = node => `#/category/${node.path}`;
   const media = label => `<div class="media" role="img" aria-label="${escape(label)}"><span class="media-label">${escape(label)}</span></div>`;
   function home() {
@@ -107,14 +112,48 @@
     if (focus) main.focus({ preventScroll: true });
   }
   function activeNodes() { return menuTrail.length ? menuTrail[menuTrail.length - 1].children : tree; }
-  function renderMenu(focus = false) {
+  function paintMenu(focus, direction) {
     const parent = menuTrail[menuTrail.length - 1];
     back.hidden = !parent;
-    panelContent.innerHTML = `<div class="menu-body"><h2 id="panel-title">${parent ? escape(menuTrail.map(x => x.name).join(' / ')) : 'Explore Vivies'}</h2><nav class="menu-items" aria-label="${parent ? escape(parent.name) : 'Main'} categories">${activeNodes().map(node => node.children ? `<button class="menu-item" data-menu="${node.path}">${escape(node.name)}<span class="menu-chevron" aria-hidden="true">›</span></button>` : `<a class="menu-item" href="${categoryLink(node)}">${escape(node.name)}<span class="menu-chevron" aria-hidden="true">›</span></a>`).join('')}</nav>${parent ? `<a class="text-link" href="${categoryLink(parent)}">View all ${escape(parent.name)}</a>` : ''}<p class="menu-caption">${parent ? 'Choose a category to continue.' : 'Men and Women · Complete category navigation'}</p></div>`;
-    if (focus) panelContent.querySelector('.menu-item')?.focus();
+    back.disabled = false;
+    panelContent.innerHTML = `<div class="menu-body"><h2 id="panel-title">${parent ? escape(menuTrail.map(x => x.name).join(' / ')) : 'Explore Vivies'}</h2><nav class="menu-items" aria-label="${parent ? escape(parent.name) : 'Main'} categories">${activeNodes().map(node => node.children ? `<button class="menu-item" data-menu="${node.path}">${escape(node.name)}<span class="menu-chevron" aria-hidden="true">›</span></button>` : `<a class="menu-item" href="${categoryLink(node)}">${escape(node.name)}<span class="menu-chevron" aria-hidden="true">›</span></a>`).join('')}</nav>${parent ? `<a class="text-link menu-view-all" href="${categoryLink(parent)}">View all ${escape(parent.name)}</a>` : ''}<p class="menu-caption">${parent ? 'Choose a category to continue.' : 'Men and Women · Complete category navigation'}</p></div>`;
+    menuChanging = false;
+    panelContent.inert = false;
+    if (focus && !reducedMotion()) {
+      menuAnimation = panelContent.firstElementChild.animate([
+        { opacity: 0, transform: `translateX(${direction * 10}px)` },
+        { opacity: 1, transform: 'translateX(0)' }
+      ], { duration: 280, easing: 'cubic-bezier(.2,.65,.3,1)' });
+    }
+    if (focus) panelContent.querySelector('.menu-item')?.focus({ preventScroll: true });
+  }
+  function renderMenu(focus = false, direction = 1) {
+    const revision = ++menuRevision;
+    const outgoing = panelContent.querySelector('.menu-body');
+    const outgoingStyle = outgoing ? getComputedStyle(outgoing) : null;
+    const startingOpacity = outgoingStyle?.opacity || '1';
+    const startingTransform = outgoingStyle?.transform || 'none';
+    menuAnimation?.cancel();
+    if (!focus || !outgoing || reducedMotion()) { paintMenu(focus, direction); return; }
+    menuChanging = true;
+    panelContent.inert = true;
+    back.disabled = true;
+    close.focus({ preventScroll: true });
+    menuAnimation = outgoing.animate([
+      { opacity: startingOpacity, transform: startingTransform },
+      { opacity: 0, transform: `translateX(${-direction * 6}px)` }
+    ], { duration: 140, easing: 'ease-in', fill: 'forwards' });
+    menuAnimation.finished.then(() => {
+      if (revision === menuRevision && panelType === 'menu') paintMenu(focus, direction);
+    }).catch(() => { /* Closing or replacing a panel intentionally cancels the transition. */ });
   }
   function openPanel(type, trigger) {
     clearTimeout(closeTimer);
+    const revision = ++panelRevision;
+    ++menuRevision;
+    menuAnimation?.cancel();
+    menuChanging = false;
+    panelContent.inert = false;
     opener = trigger || document.activeElement;
     panelType = type;
     menuTrail = [];
@@ -123,6 +162,7 @@
     panel.inert = false;
     panel.removeAttribute('aria-hidden');
     back.hidden = true;
+    back.disabled = false;
     if (type === 'menu') renderMenu();
     else if (type === 'contact') panelContent.innerHTML = '<h2 id="panel-title">Contact us</h2><button class="contact-email" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="m3 6 9 7 9-7"/></svg>Email</button><p class="contact-notice">Contact email awaiting configuration.</p><hr><nav class="contact-links" aria-label="Contact links"><a href="#/page/contact">Contact us</a><a href="#/page/faq">FAQ</a></nav>';
     else if (type === 'search') panelContent.innerHTML = `<h2 id="panel-title">Search</h2>${searchForm()}<p class="small-note">Explore the category hierarchy. Product search awaits your WooCommerce catalog.</p><div class="search-output">${resultsMarkup('')}</div>`;
@@ -130,41 +170,54 @@
     site.inert = true;
     document.body.style.overflow = 'hidden';
     document.querySelectorAll('[data-panel]').forEach(button => button.setAttribute('aria-expanded', String(button === trigger)));
-    // Commit the initial transform before beginning the slide transition.
-    void panel.offsetWidth;
-    panel.classList.add('open');
-    overlay.classList.add('open');
+    header.classList.add('panel-active');
+    // Give the closed drawer a painted frame. A layout read alone can skip the
+    // opening animation when a previously hidden dialog becomes visible.
+    const reveal = () => {
+      if (revision !== panelRevision || panelType !== type) return;
+      panel.classList.add('open');
+      overlay.classList.add('open');
+    };
+    if (reducedMotion()) reveal();
+    else requestAnimationFrame(() => requestAnimationFrame(reveal));
     (type === 'search' ? panel.querySelector('input') : close).focus();
   }
   function closePanel(restore = true) {
     if (!panelType) return;
     panelType = null;
+    ++panelRevision;
+    ++menuRevision;
+    menuAnimation?.cancel();
+    menuChanging = false;
+    back.disabled = false;
+    panelContent.inert = false;
     panel.inert = true;
     panel.setAttribute('aria-hidden', 'true');
     panel.classList.remove('open'); overlay.classList.remove('open');
+    header.classList.remove('panel-active');
     site.inert = false;
     document.body.style.overflow = '';
     document.querySelectorAll('[data-panel]').forEach(button => button.setAttribute('aria-expanded', 'false'));
     if (restore && opener?.isConnected) opener.focus({ preventScroll: true });
-    closeTimer = setTimeout(() => { if (!panelType) { panel.hidden = true; panelContent.innerHTML = ''; } }, 300);
+    closeTimer = setTimeout(() => { if (!panelType) { panel.hidden = true; panelContent.innerHTML = ''; } }, reducedMotion() ? 0 : 480);
   }
   document.addEventListener('click', event => {
     const trigger = event.target.closest('[data-panel]');
     if (trigger) { openPanel(trigger.dataset.panel, trigger); return; }
     const menuButton = event.target.closest('[data-menu]');
-    if (menuButton) { menuTrail.push(categories.find(x => x.path === menuButton.dataset.menu)); renderMenu(true); return; }
+    if (menuButton && !menuChanging) { menuTrail.push(categories.find(x => x.path === menuButton.dataset.menu)); renderMenu(true); return; }
     // Same-route links still close a panel and return focus to the content.
     const link = event.target.closest('a[href^="#/"]');
     if (link && link.getAttribute('href') === (location.hash || '#/')) { closePanel(false); main.focus(); }
   });
   close.addEventListener('click', () => closePanel());
   overlay.addEventListener('click', () => closePanel());
-  back.addEventListener('click', () => { menuTrail.pop(); renderMenu(true); });
+  back.addEventListener('click', () => { if (!menuChanging) { menuTrail.pop(); renderMenu(true, -1); } });
   document.addEventListener('keydown', event => {
     if (!panelType) return;
     if (event.key === 'Escape') { event.preventDefault(); closePanel(); return; }
     if (event.key !== 'Tab') return;
-    const controls = [...panel.querySelectorAll('button:not([disabled]),a[href],input,select')].filter(x => x.getClientRects().length);
+    const controls = [...panel.querySelectorAll('button:not([disabled]),a[href],input,select')].filter(x => x.getClientRects().length && !x.closest('[inert]'));
     const first = controls[0], last = controls[controls.length - 1];
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }

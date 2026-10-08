@@ -46,6 +46,12 @@ port 4173; override with `CHROMIUM_PATH` and `PREVIEW_URL` when necessary.
 Run the development server before the browser tests. Screenshots and results
 are generated in ignored `artifacts/`. Packaging uses Python's standard library.
 
+Motion checks sample the rendered header and drawer during their fades, verify
+outgoing/incoming menu levels, check spacing above parent archive links, and test
+closing mid-transition and reduced-motion behavior. The header fades over 420ms,
+drawers slide/fade over 480ms, and menu levels fade out over 140ms then in over
+280ms. Menu/Search icons are 16px while click targets remain comfortably sized.
+
 The browser suite covers all 33 leaf destinations, parent archives, gender-specific
 paths, search, modal keyboard behavior, responsive layouts at 1440/1024/768/390/360,
 and extracted-package launch over HTTP. Direct file launch is attempted separately;

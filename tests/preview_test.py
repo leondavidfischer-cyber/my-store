@@ -59,11 +59,10 @@ with sync_playwright() as p:
                 page.get_by_role('button', name='Menu', exact=True).click()
                 expect(page.locator('.menu-items > *')).to_have_text(['Men›', 'Women›'])
                 page.locator('#panel').get_by_role('button', name=gender, exact=True).click()
-                visible = page.locator('.menu-items > *').all_text_contents()
-                assert [x.replace('›', '') for x in visible] == list(groups)
+                expect(page.locator('.menu-items > *')).to_have_text([name + '›' for name in groups])
                 if leaves:
                     page.locator('#panel').get_by_role('button', name=group, exact=True).click()
-                    assert [x.replace('›', '') for x in page.locator('.menu-items > *').all_text_contents()] == leaves
+                    expect(page.locator('.menu-items > *')).to_have_text([name + '›' for name in leaves])
                     page.locator('#panel .menu-items').get_by_role('link', name=leaf, exact=True).click()
                     expect(page.locator('h1')).to_have_text(leaf)
                 else:
