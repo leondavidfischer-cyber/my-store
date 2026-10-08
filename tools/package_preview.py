@@ -5,7 +5,7 @@ from zipfile import ZipFile, ZIP_DEFLATED
 root = Path(__file__).resolve().parents[1]
 output = root / 'artifacts' / 'vivies-preview.zip'
 output.parent.mkdir(exist_ok=True)
-files = ['index.html', 'styles.css', 'preview.js', 'Vivies.png', 'OPEN-PREVIEW.txt', 'docs/architecture.md']
+files = ['index.html', 'styles.css', 'preview.js', 'Vivies.png', 'OPEN-PREVIEW.txt', 'docs/architecture.md', 'docs/reference-review.md']
 with ZipFile(output, 'w', ZIP_DEFLATED) as package:
     for name in files:
         package.write(root / name, 'vivies-preview/' + name)

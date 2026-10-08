@@ -15,6 +15,8 @@ TRY THE PREVIEW
 - Search for "men sunglasses", "women sunglasses", or "skirts".
 - Click the category cards and Shop Now.
 - Open Preview notes in the footer for simple/variable product layout examples.
+- Select product-gallery thumbnails and expand product information panels.
+- On mobile, expand Help and Information in the footer.
 - Resize the browser or use its mobile device tools.
 
 WHAT IS TEMPORARY

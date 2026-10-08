@@ -9,6 +9,8 @@ and settings. Do not modify core or dependency files.
 
 The current standalone preview establishes layout and interaction behavior only.
 It is neither an importable Elementor template nor deployable WordPress code.
+See [reference review and implementation mapping](reference-review.md) for the
+latest preview refinement and the remaining live-reference access limitation.
 
 ## Editing responsibilities
 

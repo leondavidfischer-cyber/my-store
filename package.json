@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "check": "node --check preview.js && node --check server.js",
-    "test": "python tests/motion_test.py && python tests/preview_test.py",
+    "test": "python tests/motion_test.py && python tests/refinement_test.py && python tests/preview_test.py",
     "package": "python tools/package_preview.py"
   }
 }

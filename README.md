@@ -89,3 +89,9 @@ launch remains unverified here. It does not test WordPress or WooCommerce integr
 See [the implementation architecture](docs/architecture.md). Development stops
 after the first complete preview for user feedback; packaging for WordPress and
 Cloudways deployment remain subsequent approved stages.
+
+The latest [reference review](docs/reference-review.md) distinguishes screenshot
+observations from the live reference inspection that is blocked by network policy.
+Archive product cards and gallery media are explicitly layout-only placeholders.
+Search clear/reset and footer/product disclosures are real preview interactions;
+no products, prices, stock, cart data or checkout transactions are simulated.

@@ -61,11 +61,11 @@
     const node = categories.find(x => x.path === path);
     if (!node) return missingPage();
     const breadcrumbs = node.trail.map((part, i) => `<a href="#/category/${node.trail.slice(0, i + 1).map(x => x.slug).join('/')}">${escape(part.name)}</a>`).join('<span aria-hidden="true">/</span>');
-    return `<section class="page"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="#/">Home</a><span aria-hidden="true">/</span>${breadcrumbs}</nav><h1>${escape(node.name)}</h1><p class="page-intro">${escape(node.trail.map(x => x.name).join(' / '))} · Category archive preview</p>${node.children ? `<nav class="subcategories" aria-label="Subcategories">${node.children.map(x => `<a href="${categoryLink(x)}">${escape(x.name)}</a>`).join('')}</nav>` : ''}<div class="empty-state"><span class="eyebrow">Catalog not connected</span><h2>Your collection will appear here</h2><p>In WordPress, products assigned to this WooCommerce category will load automatically.</p><div class="page-actions"><button class="button" data-panel="menu">Explore categories</button><a class="text-link" href="#/product/simple">View product layout</a></div></div></section>`;
+    return `<section class="page archive-page"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="#/">Home</a><span aria-hidden="true">/</span>${breadcrumbs}</nav><h1>${escape(node.name)}</h1><p class="page-intro">${escape(node.trail.map(x => x.name).join(' / '))} · Category archive preview</p>${node.children ? `<nav class="subcategories" aria-label="Subcategories">${node.children.map(x => `<a href="${categoryLink(x)}">${escape(x.name)}</a>`).join('')}</nav>` : ''}<div class="empty-state"><span class="eyebrow">Catalog not connected</span><h2>Your collection will appear here</h2><p>In WordPress, products assigned to this WooCommerce category will load automatically.</p><div class="page-actions"><button class="button" data-panel="menu">Explore categories</button><a class="text-link" href="#/product/simple">View product layout</a></div></div><section class="archive-layout" aria-labelledby="grid-heading"><h2 id="grid-heading">Product grid · Layout preview</h2><p class="small-note">The tiles below are layout placeholders, not store inventory.</p><div class="catalog-grid">${[1,2,3,4].map((number) => `<a class="catalog-card" href="#/product/${number % 2 ? 'simple' : 'variable'}">${media(`Product image ${String(number).padStart(2,'0')} · Placeholder`)}<span class="catalog-name">Product name placeholder</span><span class="catalog-price">Price placeholder</span></a>`).join('')}</div></section></section>`;
   }
   function productPage(type) {
     const variable = type === 'variable';
-    return `<section class="page"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="#/">Home</a><span>/</span><span>Product layout preview</span></nav><div class="preview-tabs"><a href="#/product/simple">Simple product layout</a><a href="#/product/variable">Variable product layout</a></div><div class="product-preview"><div>${media('Product photography · Placeholder')}<p class="notice">Gallery imagery and thumbnails will come from WooCommerce.</p></div><div class="product-details"><span class="eyebrow">${variable ? 'Variable' : 'Simple'} product · Layout preview</span><h1>Product name placeholder</h1><p class="small-note">Price and stock will come from WooCommerce. No real product or inventory is shown.</p><p>Product description placeholder. Final content will be editable in the WordPress dashboard.</p>${variable ? '<label for="size">Size · demonstration control</label><select id="size"><option value="">Choose a size</option><option>S · placeholder</option><option>M · placeholder</option><option>L · placeholder</option></select><p class="small-note" id="variation-status" aria-live="polite">Select a size to preview the selection state.</p>' : ''}<label for="quantity">Quantity · demonstration control</label><input id="quantity" type="number" min="1" max="99" value="1" aria-label="Quantity"><button class="button" disabled>Add to Cart · not connected</button><p class="small-note">Purchasing stays disabled in this prototype. The WordPress implementation will use native WooCommerce variation, availability and cart validation.</p></div></div></section>`;
+    return `<section class="page product-page"><nav class="breadcrumb" aria-label="Breadcrumb"><a href="#/">Home</a><span>/</span><span>Product layout preview</span></nav><div class="preview-tabs"><a href="#/product/simple">Simple product layout</a><a href="#/product/variable">Variable product layout</a></div><div class="product-preview"><div class="product-gallery"><div id="product-gallery" aria-live="polite">${media('Product image 01 · Placeholder')}</div><div class="gallery-thumbnails" role="group" aria-label="Product image placeholders">${[1,2,3,4].map(number => `<button class="gallery-thumb" data-gallery="${number}" aria-label="View product image ${number} placeholder" aria-pressed="${number === 1}" aria-controls="product-gallery"><span aria-hidden="true">${String(number).padStart(2,'0')}</span></button>`).join('')}</div></div><div class="product-details"><span class="eyebrow">${variable ? 'Variable' : 'Simple'} product · Layout preview</span><h1>Product name placeholder</h1><p class="product-price">Price placeholder</p><p class="product-description">Your product description will appear here.</p>${variable ? '<label for="size">Size · demonstration control</label><select id="size"><option value="">Choose a size</option><option>S · placeholder</option><option>M · placeholder</option><option>L · placeholder</option></select><p class="small-note" id="variation-status" aria-live="polite">Select a size to preview the selection state.</p>' : ''}<label for="quantity">Quantity · demonstration control</label><input id="quantity" type="number" min="1" max="99" value="1" aria-label="Quantity"><button class="button" disabled aria-describedby="purchase-notice">Add to Cart · not connected</button><p class="small-note" id="purchase-notice">Design preview. No real product, price or inventory is shown. Purchasing is unavailable.</p><div class="product-information"><details><summary>Product details<span aria-hidden="true">+</span></summary><p>Editable product information placeholder. Your gallery, description, availability and options will come from WooCommerce.</p></details><details><summary>Shipping &amp; Returns<span aria-hidden="true">+</span></summary><p>Your approved policy content will appear here.</p><a class="text-link" href="#/page/shipping">Shipping &amp; Returns page</a></details></div></div></div></section>`;
   }
   function commercePage(checkout) {
     return `<section class="page"><span class="eyebrow">Design prototype</span><h1>${checkout ? 'Checkout' : 'Shopping bag'}</h1><p class="page-intro">WooCommerce is not connected in this preview.</p><div class="empty-state"><h2>${checkout ? 'Checkout awaits WooCommerce' : 'Your shopping bag is empty'}</h2><p>${checkout ? 'Addresses, shipping, totals and payment methods will be handled by WooCommerce. No personal or payment details are collected here.' : 'Real products, quantities, totals and cart-count updates will be available in the WordPress implementation.'}</p><div class="page-actions"><button class="button" data-panel="menu">Explore categories</button>${checkout ? '<a class="text-link" href="#/cart">Back to shopping bag</a>' : '<a class="text-link" href="#/checkout">View checkout placeholder</a>'}</div></div></section>`;
@@ -85,10 +85,11 @@
   }
   function resultsMarkup(query) {
     const matches = matchingCategories(query);
-    return `<p class="small-note" role="status">${query.trim() ? `${matches.length} category ${matches.length === 1 ? 'result' : 'results'}` : 'Enter a category name to explore the navigation.'}</p><div class="search-results">${matches.map(node => `<a href="${categoryLink(node)}">${escape(node.name)}<small>${escape(node.trail.map(x => x.name).join(' / '))}</small></a>`).join('')}</div>`;
+    const choices = query.trim() ? matches : tree;
+    return `<p class="small-note" role="status">${query.trim() ? `${matches.length} category ${matches.length === 1 ? 'result' : 'results'}` : 'Explore the collections'}</p>${query.trim() && !matches.length ? '<p class="search-empty">No matching category. Try T-Shirts, Sunglasses or Skirts.</p>' : ''}<div class="search-results">${choices.map(node => `<a href="${categoryLink(node)}"><span>${escape(node.name)}</span><small>${escape(node.trail.map(x => x.name).join(' / '))}</small><span class="result-arrow" aria-hidden="true">→</span></a>`).join('')}</div>`;
   }
   function searchForm(query = '') {
-    return `<form class="search-form" role="search"><input class="search-input" type="search" name="q" value="${escape(query)}" aria-label="Search categories in this preview" placeholder="Search the preview" autocomplete="off"><button type="submit" aria-label="Show search results"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></form>`;
+    return `<form class="search-form" role="search"><input class="search-input" type="search" name="q" value="${escape(query)}" aria-label="Search categories in this preview" placeholder="Search the preview" autocomplete="off"><button type="button" class="clear-search" aria-label="Clear search" ${query ? '' : 'hidden'}>×</button><button type="submit" aria-label="Show search results"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></form>`;
   }
   function searchPage(query) {
     return `<section class="page"><h1>Search</h1>${searchForm(query)}<p class="small-note">Category search demonstration. Product search will use your real WooCommerce catalog after integration.</p><div class="search-output">${resultsMarkup(query)}</div></section>`;
@@ -202,6 +203,25 @@
     closeTimer = setTimeout(() => { if (!panelType) { panel.hidden = true; panelContent.innerHTML = ''; } }, reducedMotion() ? 0 : 480);
   }
   document.addEventListener('click', event => {
+    const thumbnail = event.target.closest('[data-gallery]');
+    if (thumbnail) {
+      const label = `Product image ${String(thumbnail.dataset.gallery).padStart(2,'0')} · Placeholder`;
+      const image = document.querySelector('#product-gallery .media');
+      image.setAttribute('aria-label', label);
+      image.querySelector('.media-label').textContent = label;
+      document.querySelectorAll('[data-gallery]').forEach(button => button.setAttribute('aria-pressed', String(button === thumbnail)));
+      return;
+    }
+    const clearSearch = event.target.closest('.clear-search');
+    if (clearSearch) {
+      const form = clearSearch.closest('.search-form');
+      const input = form.querySelector('input');
+      input.value = '';
+      clearSearch.hidden = true;
+      form.parentElement.querySelector('.search-output').innerHTML = resultsMarkup('');
+      input.focus();
+      return;
+    }
     const trigger = event.target.closest('[data-panel]');
     if (trigger) { openPanel(trigger.dataset.panel, trigger); return; }
     const menuButton = event.target.closest('[data-menu]');
@@ -224,7 +244,9 @@
   });
   document.addEventListener('input', event => {
     if (event.target.matches('.search-input')) {
-      event.target.closest('.search-form').parentElement.querySelector('.search-output').innerHTML = resultsMarkup(event.target.value);
+      const form = event.target.closest('.search-form');
+      form.parentElement.querySelector('.search-output').innerHTML = resultsMarkup(event.target.value);
+      form.querySelector('.clear-search').hidden = !event.target.value;
     }
   });
   document.addEventListener('change', event => {
@@ -241,4 +263,8 @@
   window.addEventListener('hashchange', () => renderRoute());
   window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 12), { passive: true });
   renderRoute(false);
+  const compactFooter = window.matchMedia('(max-width: 768px)');
+  const adjustFooter = () => document.querySelectorAll('.footer-group').forEach(group => { group.open = !compactFooter.matches; });
+  adjustFooter();
+  compactFooter.addEventListener('change', adjustFooter);
 })();
