@@ -7,6 +7,7 @@ const allowed = new Map([
   ['/index.html', ['index.html', 'text/html; charset=utf-8']],
   ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
   ['/preview.js', ['preview.js', 'text/javascript; charset=utf-8']],
+  ['/Vivies.png', ['Vivies.png', 'image/png']],
 ]);
 const port = Number(process.env.PORT || 4173);
 http.createServer((req, res) => {

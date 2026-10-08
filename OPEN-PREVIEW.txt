@@ -4,7 +4,7 @@ VIVIES — FIRST DESIGN PREVIEW
 2. Open the extracted vivies-preview folder.
 3. Double-click index.html to open it in Chrome, Edge, Firefox or Safari.
 
-Keep styles.css and preview.js next to index.html. Internet access is not required.
+Keep styles.css, preview.js and Vivies.png next to index.html. Internet access is not required.
 Do not upload this ZIP as a WordPress theme or Elementor template.
 
 TRY THE PREVIEW
@@ -18,7 +18,7 @@ TRY THE PREVIEW
 - Resize the browser or use its mobile device tools.
 
 WHAT IS TEMPORARY
-The text logo, all image areas, category-card selections, featured captions,
+The original Vivies logo is used unchanged. All other image areas, category-card selections, featured captions,
 contact email, informational pages and product content await approval/assets.
 No Louis Vuitton branding or campaign imagery is included.
 
@@ -29,6 +29,6 @@ Purchasing is disabled. Cart, totals, checkout, payments and orders are not
 simulated. Elementor editing will be verified after design approval.
 
 NEXT STEP
-Review the layout and interactions, then provide design feedback and a usable
-original Vivies logo. The deployable WordPress implementation comes only after
+Review the layout and interactions, then provide design feedback and final
+photography. The deployable WordPress implementation comes only after
 your approval. No live-site changes have been made.

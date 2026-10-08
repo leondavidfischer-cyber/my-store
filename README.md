@@ -29,7 +29,7 @@ npm start
 ```
 
 The dependency-free Node server uses port 4173 (`PORT` overrides it). Stop it with
-Ctrl+C. It serves only the three preview assets and has no commerce endpoints.
+Ctrl+C. It serves only the preview document, CSS, JavaScript and logo and has no commerce endpoints.
 No npm install step is needed. Node 18 or later is sufficient.
 
 ## Validation
@@ -60,8 +60,10 @@ launch remains unverified here. It does not test WordPress or WooCommerce integr
 
 ## Temporary decisions and scope
 
-- No usable logo file is present in the filesystem; the supplied inline image
-  appeared entirely black. The serif text wordmark is an explicit preview fallback.
+- The original transparent `Vivies.png` is used unchanged in the header and footer.
+  Its transparent outer margins are clipped by a CSS display frame based on the
+  visible artwork bounds (50, 377)–(939, 615) within the 1000×1000 source. The image
+  scales uniformly; its visible proportions and source bytes are preserved.
 - Available screenshots show the top header, first-level menu, nested Men menu
   and contact panel. Remaining reference states have not been supplied.
 - Media areas are abstract neutral placeholders, not final campaign artwork.
